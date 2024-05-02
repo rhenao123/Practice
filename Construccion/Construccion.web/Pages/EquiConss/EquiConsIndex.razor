@@ -1,0 +1,70 @@
+﻿@page "/EquiConss"
+
+
+@inject IRepository Repository
+
+<h1>Equipo de construccion</h1>
+<div class="mb-3">
+    <a class="btn btn-primary" href="/EquiConss/create">New Equi</a>
+</div>
+
+
+<GenericList MyList="EquiConss">
+
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>EquiCons</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var EquiCons in EquiConss!)
+                {
+                    <tr>
+                        <td>
+                            @EquiCons.Nombre
+                        </td>
+                        <td>
+                            @EquiCons.Especialidades
+                        </td>
+                        <td>
+                            @EquiCons.Lista_Miembros
+                        </td>
+                            <a class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger">Borrar</button>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </Body>
+
+</GenericList>
+
+
+
+
+
+@code {
+    
+    public List<EquiCons>? EquiConss { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+     var responseHttp= await Repository.GetAsync<List<EquiCons>>("/api/EquiConss");    
+
+        EquiConss = responseHttp.Response!;
+
+   
+    
+    }
+
+
+
+
+
+}
+
